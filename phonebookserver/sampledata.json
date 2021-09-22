@@ -1,0 +1,17 @@
+{
+  "name": "MyPhoneBook",
+  "Entries": [
+    {
+      "Name": "Papa Bengu",
+      "ContactNumber": "071 937 8823"
+    },
+    {
+      "Name": "Madillo Bengu",
+      "ContactNumber": "071 937 8823"
+    },
+    {
+      "Name": "Nomzwake Bengu",
+      "ContactNumber": "071 937 8823"
+    }
+  ]
+}
