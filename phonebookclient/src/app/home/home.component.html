@@ -2,5 +2,21 @@
     <app-search></app-search>
 </div>
 <div class="phone-book-container">
-    <app-phonebook *ngFor="let book of phonebooks" [name]="book.name"></app-phonebook>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let book of phonebooks">
+
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ book.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ book.entries.length }} contact(s)
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <app-phonebook *ngFor="let entry of book.entries" [name]="entry.name" [contactnumber]="entry.contactNumber">
+            </app-phonebook>
+
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

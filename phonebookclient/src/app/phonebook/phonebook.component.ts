@@ -7,7 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PhonebookComponent implements OnInit {
   @Input() name: string;
-
+  @Input() contactnumber: string;
+  
   constructor() { }
 
   ngOnInit(): void {
