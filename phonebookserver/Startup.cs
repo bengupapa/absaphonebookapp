@@ -43,6 +43,14 @@ namespace phonebookserver
                     }
                 });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "MyAllowSpecificOrigins",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200");
+                                  });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,7 +60,8 @@ namespace phonebookserver
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseCors("MyAllowSpecificOrigins");
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
             app.UseSwagger();

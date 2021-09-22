@@ -1,0 +1,6 @@
+<div>
+    <app-search></app-search>
+</div>
+<div class="phone-book-container">
+    <app-phonebook *ngFor="let book of phonebooks" [name]="book.name"></app-phonebook>
+</div>
