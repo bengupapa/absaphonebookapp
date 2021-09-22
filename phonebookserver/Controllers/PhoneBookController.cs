@@ -23,7 +23,7 @@ namespace phonebookserver.Controllers
         public IActionResult Entries(int id)
         {
             var sampleData = System.IO.File.ReadAllText("sampledata.json");
-            var data = JsonConvert.DeserializeObject<PhoneBook>(sampleData);
+            var data = JsonConvert.DeserializeObject<PhoneBookDirectory>(sampleData);
             return new JsonResult(data);
         }
     }

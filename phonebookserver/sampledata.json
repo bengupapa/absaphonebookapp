@@ -1,17 +1,38 @@
 {
-  "name": "MyPhoneBook",
-  "Entries": [
+  "PhoneBooks": [
     {
-      "Name": "Papa Bengu",
-      "ContactNumber": "071 937 8823"
+      "name": "Papa Bengu",
+      "Entries": [
+        {
+          "Name": "Work",
+          "ContactNumber": "071 937 8823"
+        },
+        {
+          "Name": "Home",
+          "ContactNumber": "071 937 8823"
+        },
+        {
+          "Name": "Home 2",
+          "ContactNumber": "071 937 8823"
+        }
+      ]
     },
     {
-      "Name": "Madillo Bengu",
-      "ContactNumber": "071 937 8823"
-    },
-    {
-      "Name": "Nomzwake Bengu",
-      "ContactNumber": "071 937 8823"
+      "name": "Nomzwake Bengu",
+      "Entries": [
+        {
+          "Name": "Work",
+          "ContactNumber": "071 937 8823"
+        },
+        {
+          "Name": "Home",
+          "ContactNumber": "071 937 8823"
+        },
+        {
+          "Name": "Home 2",
+          "ContactNumber": "071 937 8823"
+        }
+      ]
     }
   ]
 }
