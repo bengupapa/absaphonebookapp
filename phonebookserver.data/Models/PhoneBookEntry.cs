@@ -2,10 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace phonebookserver.Models
+namespace phonebookserver.data.Models
 {
-    public class Entry
+    public class PhoneBookEntry
     {
+        public int? Id { get; set; }
+
+        public int PhoneBookId { get; set; }
+
         public string Name { get; set; }
 
         public string ContactNumber { get; set; }

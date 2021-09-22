@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using phonebookserver.data.Models;
+using System.Collections.Generic;
 
 namespace phonebookserver.Models
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using phonebookserver.data;
 using phonebookserver.Models;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace phonebookserver.Controllers
     public class PhoneBookController: Controller
     {
         private ILogger<PhoneBookController> _logger { get; }
+        private PhoneBookDbContext _context { get; }
 
-        public PhoneBookController(ILogger<PhoneBookController> logger) 
+        public PhoneBookController(ILogger<PhoneBookController> logger, PhoneBookDbContext context) 
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet, Route("entries/{id?}")]
@@ -24,6 +27,7 @@ namespace phonebookserver.Controllers
         {
             var sampleData = System.IO.File.ReadAllText("sampledata.json");
             var data = JsonConvert.DeserializeObject<PhoneBookDirectory>(sampleData);
+
             return new JsonResult(data);
         }
     }
