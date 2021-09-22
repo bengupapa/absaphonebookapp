@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace phonebookserver.Controllers
 {
-    [Route("api/{controller}")]
+    [Route("api/contacts")]
     public class PhoneBookController : Controller
     {
         private ILogger<PhoneBookController> _logger { get; }
@@ -31,18 +31,20 @@ namespace phonebookserver.Controllers
             };
         }
 
-        [HttpGet, Route("{id?}")]
-        public async Task<IActionResult> Get(int? id)
+        /// <summary>
+        /// Gets phone books and their entries
+        /// </summary>
+        /// <returns>
+        /// Phone books and their entries
+        /// </returns>
+        [HttpGet, Route("phonebooks")]
+        public async Task<IActionResult> GetPhoneBooksAndTheirEntries()
         {
             try
             {
                 _logger.LogInformation("START: fetching data:");
 
-                var data = id.HasValue
-                    ? _context.PhoneBooks.Include(e => e.Entries).Where(e => e.Id == id)
-                    : _context.PhoneBooks.Include(e => e.Entries);
-
-                var response = await data.ToListAsync();
+                var response = await _context.PhoneBooks.Include(e => e.Entries).ToListAsync();
 
                 _logger.LogInformation(JsonConvert.SerializeObject(response, _jsonSerializerSettings));
                 _logger.LogInformation("DONE: fetching data:");
@@ -59,43 +61,47 @@ namespace phonebookserver.Controllers
             }
         }
 
-        [HttpPost, Route("create")]
-        public async Task<IActionResult> CreatePhoneBook([FromBody] Book book)
+        /// <summary>
+        /// Gets phone book and it's entries
+        /// </summary>
+        /// <param name="id">Id for retrieving a specific phone book.</param>
+        /// <returns>
+        /// Phone book of the specified id and it's entries
+        /// </returns>
+        [HttpGet, Route("phonebook/{id}")]
+        public async Task<IActionResult> GetPhoneBookWithEntries(int id)
         {
             try
             {
-                _logger.LogInformation("START: processing phone book:");
+                _logger.LogInformation("START: fetching data:");
 
-                var existingBook = _context.PhoneBooks.FirstOrDefault(x => x.Name.ToLower() == book.Name.ToLower());
+                var response = await _context.PhoneBooks
+                    .Include(e => e.Entries)
+                    .Where(e => e.Id == id)
+                    .ToListAsync();
 
-                if (existingBook != null)
-                    return Ok("EXIST: Phone book already exists");
+                _logger.LogInformation(JsonConvert.SerializeObject(response, _jsonSerializerSettings));
+                _logger.LogInformation("DONE: fetching Phone book and entries:");
 
-                PhoneBook phoneBook = new()
-                {
-                    Name = book.Name
-                };
-
-                _context.PhoneBooks.Add(phoneBook);
-                _logger.LogInformation(JsonConvert.SerializeObject(book));
-                _logger.LogInformation("CREATED: book successfully");
-
-                await _context.SaveChangesAsync();
-
-                return Ok("Phone book processed successfully");
+                return Ok(response);
             }
             catch (Exception e)
             {
-                var message = "ERROR: Failed to process phone book";
+                var message = "ERROR: Failed to pull Phone Books";
 
-                _logger.LogError($"{message} - {e.Message}");
+                _logger.LogError(message, e);
 
                 return BadRequest(message);
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Entry entry)
+        /// <summary>
+        /// Creates new or updates exisiting phone book entry
+        /// </summary>
+        /// <param name="entry">Phone book entry payload</param>
+        /// <returns></returns>
+        [HttpPost, Route("createentry")]
+        public async Task<IActionResult> PostEntry([FromBody] Entry entry)
         {
             try
             {
@@ -130,6 +136,46 @@ namespace phonebookserver.Controllers
             catch (Exception e)
             {
                 var message = "ERROR: Failed to process entry";
+
+                _logger.LogError($"{message} - {e.Message}");
+
+                return BadRequest(message);
+            }
+        }
+
+        /// <summary>
+        /// Creates new phone book if it does not exist.
+        /// </summary>
+        /// <param name="book">Phone book payload</param>
+        /// <returns></returns>
+        [HttpPost, Route("createphonebook")]
+        public async Task<IActionResult> CreatePhoneBook([FromBody] Book book)
+        {
+            try
+            {
+                _logger.LogInformation("START: processing phone book:");
+
+                var existingBook = _context.PhoneBooks.FirstOrDefault(x => x.Name.ToLower() == book.Name.ToLower());
+
+                if (existingBook != null)
+                    return Ok("EXIST: Phone book already exists");
+
+                PhoneBook phoneBook = new()
+                {
+                    Name = book.Name
+                };
+
+                _context.PhoneBooks.Add(phoneBook);
+                _logger.LogInformation(JsonConvert.SerializeObject(book));
+                _logger.LogInformation("CREATED: book successfully");
+
+                await _context.SaveChangesAsync();
+
+                return Ok("Phone book processed successfully");
+            }
+            catch (Exception e)
+            {
+                var message = "ERROR: Failed to process phone book";
 
                 _logger.LogError($"{message} - {e.Message}");
 

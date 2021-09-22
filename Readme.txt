@@ -5,9 +5,9 @@ Solution dir	: absaphonebookapp
 Clinet dir		: absaphonebookapp/phonebookclient
 Server dir		: absaphonebookapp/phonebookserver
 
----------------------------
-Assumption and scope limits
----------------------------
+----------------------------
+Assumptions and scope limits
+----------------------------
 - This solution does not cater for country specialised phone number formats.
 - This solution does not cater for country codes.
 - This solution assumes that phone number contains only numbers.
@@ -49,3 +49,5 @@ From Server dir, open any shell (recommends Powershell)
 - run dotnet run --no-build
 
 The server api should be running on the default kestrel ports: http://localhost:5000/ and httpd://localhost:5001/ (Note: http redirects to https)
+Swagger: https://localhost:5001/index.html - See swagger for available endpoints (When using Kestrel server)
+Swagger: https://localhost:44376/index.html - See swagger for available endpoints (When using IIS Express server)

@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using phonebookserver.data;
+using System;
 
 namespace phonebookserver
 {
@@ -26,6 +28,21 @@ namespace phonebookserver
             {
                 option.UseSqlServer(_configuration["ConnectionStrings:PhoneBookDb"]);
             });
+            services.AddSwaggerGen(config => 
+            {
+                config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Phone Book API",
+                    Version = "v1",
+                    Description = "Provides phone book management services.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Papa Bengu",
+                        Email = string.Empty,
+                        Url = new Uri("https://localhost:5001"),
+                    }
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,6 +55,12 @@ namespace phonebookserver
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Phone Book API");
+                options.RoutePrefix = string.Empty;
+            });
         }
     }
 }
