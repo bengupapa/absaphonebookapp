@@ -1,19 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace phonebookserver.data.Models
+namespace phonebookserver.api.Models
 {
-    public class PhoneBookEntry
+    public class Entry
     {
-        public int? Id { get; set; }
-
         public int PhoneBookId { get; set; }
 
         public string Name { get; set; }
 
         public string ContactNumber { get; set; }
-
-        public PhoneBook PhoneBook { get; set; }
     }
 }

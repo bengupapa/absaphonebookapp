@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace phonebookserver.data.Models
 {
@@ -13,6 +14,7 @@ namespace phonebookserver.data.Models
 
         public string Name { get; set; }
 
-        public virtual IEnumerable<PhoneBookEntry> Entries { get; set; }
+        [JsonIgnore]
+        public ICollection<PhoneBookEntry> Entries { get; set; }
     }
 }

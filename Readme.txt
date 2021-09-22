@@ -5,6 +5,21 @@ Solution dir	: absaphonebookapp
 Clinet dir		: absaphonebookapp/phonebookclient
 Server dir		: absaphonebookapp/phonebookserver
 
+---------------------------
+Assumption and scope limits
+---------------------------
+- This solution does not cater for country specialised phone number formats.
+- This solution does not cater for country codes.
+- This solution assumes that phone number contains only numbers.
+- This solution assimes that phone number has a length of 10 digits.
+
+---------
+DB Server
+---------
+This solution requires Microsoft SQL Server
+This solution reserves the database name BNGPAPPhoneBook. Please ensure you don't already have a db with this name.
+
+
 ----------
 Client App
 ----------
