@@ -1,12 +1,9 @@
 <div class="main-container">
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="search-form">
         <mat-form-field class="search-form">
-            <input class="search-form" matInput placeholder="Search by contact name" name="first" ngModel required
-                #first="ngModel">
+            <input class="search-form" matInput placeholder="Search by contact name" name="searchbox" ngModel required
+                #searchbox="ngModel">
         </mat-form-field>
         <button mat-flat-button color="primary">Search</button>
     </form>
-</div>
-<div >
-
 </div>

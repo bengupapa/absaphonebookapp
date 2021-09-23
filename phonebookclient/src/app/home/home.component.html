@@ -1,9 +1,9 @@
 <div>
-    <app-search></app-search>
+    <app-search (searchEvent)=search($event)></app-search>
 </div>
-<div class="phone-book-container">
+<div class="phone-book-container"  *ngIf="(phonebooks$ | async) as books">
     <mat-accordion>
-        <mat-expansion-panel *ngFor="let book of phonebooks">
+        <mat-expansion-panel *ngFor="let book of books">
 
             <mat-expansion-panel-header>
                 <mat-panel-title>

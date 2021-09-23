@@ -7,10 +7,19 @@ import { PhoneBook } from '../interfaces/phone-book';
   providedIn: 'root'
 })
 export class PhoneBooksService {
-  url = 'http://localhost:5000/api/contacts/phonebooks';
+  url = 'http://localhost:5000/api/contacts';
   constructor(public http: HttpClient) {}
  
   getPhoneBooks(): Observable<PhoneBook[]> {
-    return this.http.get<PhoneBook[]>(this.url);
+    return this.http.get<PhoneBook[]>(`${this.url}/phonebooks`);
+  }
+
+  searchPhoneBooks(term: string): Observable<PhoneBook[]> {
+    if(term)
+    {
+      return this.http.get<PhoneBook[]>(`${this.url}/phonebook/${term}`);
+    }
+
+    return this.http.get<PhoneBook[]>(`${this.url}/phonebooks`);
   }
 }

@@ -68,17 +68,27 @@ namespace phonebookserver.Controllers
         /// <returns>
         /// Phone book of the specified id and it's entries
         /// </returns>
-        [HttpGet, Route("phonebook/{id}")]
-        public async Task<IActionResult> GetPhoneBookWithEntries(int id)
+        [HttpGet, Route("phonebook/{term}")]
+        public async Task<IActionResult> GetPhoneBookWithEntries(string term)
         {
             try
             {
                 _logger.LogInformation("START: fetching data:");
 
-                var response = await _context.PhoneBooks
-                    .Include(e => e.Entries)
-                    .Where(e => e.Id == id)
+                term = term.ToLower();
+
+                var ids = await _context.PhoneBookEntries
+                    .Include(e => e.PhoneBook)
+                    .Where(e => e.Name.ToLower().Contains(term) || e.ContactNumber.Contains(term))
+                    .Select(x => x.PhoneBookId)
                     .ToListAsync();
+
+                var books = await _context.PhoneBooks
+                    .Include(e => e.Entries)
+                    .Where(e => e.Name.ToLower().Contains(term) || ids.Contains(e.Id.Value))
+                    .ToListAsync();
+
+                var response = books.Distinct(PhoneBookComparer.Instance).ToList();
 
                 _logger.LogInformation(JsonConvert.SerializeObject(response, _jsonSerializerSettings));
                 _logger.LogInformation("DONE: fetching Phone book and entries:");
