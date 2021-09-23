@@ -13,7 +13,7 @@
                     {{ book.entries.length }} contact(s)
                 </mat-panel-description>
             </mat-expansion-panel-header>
-
+            <button mat-flat-button color="primary" (click)="createEntry(book.id)">Add entry</button>
             <app-phonebook *ngFor="let entry of book.entries" [name]="entry.name" [contactnumber]="entry.contactNumber">
             </app-phonebook>
 

@@ -15,7 +15,6 @@ export class SearchComponent implements OnInit {
   }
 
   public onSubmit(form: NgForm): void {
-    console.log("onsubmit", form.value.searchbox);
     this.searchEvent.emit(form.value.searchbox);
   }
 

@@ -16,13 +16,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PhonebookComponent } from './phonebook/phonebook.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateEntryComponent } from './create-entry/create-entry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     PhonebookComponent,
-    HomeComponent
+    HomeComponent,
+    CreateEntryComponent
   ],
   imports: [
     BrowserModule,

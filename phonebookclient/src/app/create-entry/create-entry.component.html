@@ -1,0 +1,16 @@
+<div class="main-container">
+    <h3>New entry for {{ phoneBookName }}</h3>
+    <h4>{{ count }} existing contact number(s)</h4>
+</div>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="search-form">
+    <mat-form-field class="search-form">
+        <input class="search-form" matInput placeholder="Name" name="name" ngModel required
+            #searchbox="ngModel">
+    </mat-form-field>
+    <mat-form-field class="search-form">
+        <input class="search-form" matInput placeholder="Contact number" name="contact" ngModel required type="number" max="10" min="10"
+            #searchbox="ngModel">
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Create</button>
+    <button mat-flat-button color="secondary" (click)="cancel()" type="button">Cancel</button>
+</form>

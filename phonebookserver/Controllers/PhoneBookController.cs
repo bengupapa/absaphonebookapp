@@ -64,11 +64,11 @@ namespace phonebookserver.Controllers
         /// <summary>
         /// Gets phone book and it's entries
         /// </summary>
-        /// <param name="id">Id for retrieving a specific phone book.</param>
+        /// <param name="term">Search term for retrieving a specific phone book.</param>
         /// <returns>
         /// Phone book of the specified id and it's entries
         /// </returns>
-        [HttpGet, Route("phonebook/{term}")]
+        [HttpGet, Route("phonebooks/search/{term}")]
         public async Task<IActionResult> GetPhoneBookWithEntries(string term)
         {
             try
@@ -89,6 +89,40 @@ namespace phonebookserver.Controllers
                     .ToListAsync();
 
                 var response = books.Distinct(PhoneBookComparer.Instance).ToList();
+
+                _logger.LogInformation(JsonConvert.SerializeObject(response, _jsonSerializerSettings));
+                _logger.LogInformation("DONE: fetching Phone book and entries:");
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                var message = "ERROR: Failed to pull Phone Books";
+
+                _logger.LogError(message, e);
+
+                return BadRequest(message);
+            }
+        }
+
+        /// <summary>
+        /// Gets phone book and it's entries
+        /// </summary>
+        /// <param name="id">Id for retrieving a specific phone book.</param>
+        /// <returns>
+        /// Phone book of the specified id and it's entries
+        /// </returns>
+        [HttpGet, Route("phonebooks/{id}")]
+        public async Task<IActionResult> GetPhoneBookWithEntries(int id)
+        {
+            try
+            {
+                _logger.LogInformation("START: fetching data:");
+
+                var response = await _context.PhoneBooks
+                    .Include(e => e.Entries)
+                    .Where(e => e.Id == id)
+                    .ToListAsync();
 
                 _logger.LogInformation(JsonConvert.SerializeObject(response, _jsonSerializerSettings));
                 _logger.LogInformation("DONE: fetching Phone book and entries:");

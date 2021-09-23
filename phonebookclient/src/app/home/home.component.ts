@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { PhoneBook } from '../interfaces/phone-book';
@@ -12,7 +12,7 @@ import { PhoneBooksService } from '../services/phone-book.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private phoneBookService: PhoneBooksService) { }
+  constructor(private activatedRoute: ActivatedRoute, private phoneBookService: PhoneBooksService, private router: Router) { }
 
   public phonebooks$: Observable<PhoneBook[]>;
 
@@ -22,6 +22,10 @@ export class HomeComponent implements OnInit {
 
   search(term): void {
     this.phonebooks$  =  this.phoneBookService.searchPhoneBooks(term).pipe();
+  }
+
+  createEntry(id: number): void {
+    this.router.navigate(['/createentry', {phoneBookId:id}]);
   }
 
 }

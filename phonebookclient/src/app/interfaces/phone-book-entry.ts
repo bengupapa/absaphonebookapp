@@ -1,5 +1,5 @@
 export interface PhoneBookEntry {
-    Id: number;
+    Id?: number;
     PhoneBookId: number;
     Name: string;
     ContactNumber: string;

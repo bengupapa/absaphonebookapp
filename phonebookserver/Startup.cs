@@ -48,7 +48,9 @@ namespace phonebookserver
                 options.AddPolicy(name: "MyAllowSpecificOrigins",
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:4200");
+                                      builder.WithOrigins("http://localhost:4200", "http://localhost:4200/createentry");
+                                      builder.AllowAnyMethod();
+                                      builder.AllowAnyHeader();
                                   });
             });
         }
